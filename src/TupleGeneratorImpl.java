@@ -14,7 +14,7 @@ import java.util.*;
  * keys and foreign key constraints.
  */
 public class TupleGeneratorImpl
-        implements TupleGenerator
+        implements TupleGeneratorArpinar
 {
     /** Counter for table numbers
      */

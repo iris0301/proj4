@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class Driver {
 	protected Connection conn;
-	protected TupleGenerator generator = new TupleGeneratorImpl();
+	protected TupleGeneratorArpinar generator = new TupleGeneratorImpl();
 	protected int size[];
 	protected Comparable[][][] data;
 
