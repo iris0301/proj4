@@ -1,0 +1,6 @@
+Select *from student where id = v1; 
+Select * from student where id between v2 and v3; 
+Select s.name from student s, Transcript t, Course c where s.id = t.studId AND t.crsCode = c.crsCode AND c.crsCode = v4; 
+Select s.name from student s, Transcript transcript,Teaching  teaching, Professor p where s.id = transcript.studId AND teaching.crsCode = transcript.crsCode AND teaching.profId = p.id  AND p.name = “sample_text”; 
+Select s.name from student s, course c ,Transcript transcript where transcript.studId = s.id AND transcript.crsCode = c.crsCode AND     c.deptId = “v6” AND c.deptId != “v7” ;  
+Select s.name from student s, course c ,Transcript t where s.id = t.studId AND t.crsCode = c.crsCode AND  c.deptId = “sample_department” ; 
