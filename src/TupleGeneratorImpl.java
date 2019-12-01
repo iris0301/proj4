@@ -1,5 +1,5 @@
 
-/*****************************************************************************************
+/*******************************************************************************
  * @file  TupleGeneratorImpl
  *
  * @author   Sadiq Charaniya, John Miller
@@ -8,19 +8,19 @@
 import static java.lang.System.out;
 import java.util.*;
 
-/*****************************************************************************************
+/*******************************************************************************
  * This class is used to populate a database (collection of tables) with randomly
- * generated values that satisfy the following integrity constraints: domain, primary
- * keys and foreign key constraints.
+ * generated values that satisfy the following integrity constraints:  domain,
+ * primary keys and foreign key constraints.
  */
 public class TupleGeneratorImpl
-        implements TupleGeneratorArpinar
+       implements TupleGeneratorArpinar
 {
     /** Counter for table numbers
      */
     private int counter = 0;
 
-    /** Initializations
+    /** Initializations 
      */
     private HashMap <String, Comparable [][]> result = new HashMap <> ();
 
@@ -33,8 +33,8 @@ public class TupleGeneratorImpl
     private HashMap <String, String []> tablepks = new HashMap <> ();
 
     HashMap <String, String [][]> tablefks = new HashMap <> ();
-
-    /*******************************************************************************************
+    
+    /***************************************************************************
      * Adding relation to Schema.
      * @param name        the name of the table
      * @param attribute   the array of attributes
@@ -52,8 +52,8 @@ public class TupleGeneratorImpl
         tablefks.put (name, foreignKey);
         counter++;
     } // addRelSchema
-
-    /*******************************************************************************************
+    
+    /***************************************************************************
      * Adding relation to Schema.  Convenience method.
      * @param name        the name of the table
      * @param attribute   the string embedding the table's attributes
@@ -65,15 +65,15 @@ public class TupleGeneratorImpl
                               String primaryKey, String [][] foreignKey)
     {
         addRelSchema (name, attribute.split (" "), domain.split (" "),
-                primaryKey.split (" "), foreignKey);
+                      primaryKey.split (" "), foreignKey);
     } // addRelSchema
 
-    /***********************************************************************************
+    /***************************************************************************
      * Generates random tuples that satisfy all the integrity constraints.
      * @param tuples  the number of tuples for each table
      * @return  tempResult contains tuples for all the tables in the order they were added
      */
-    public Comparable [][][] generate (int [] tuples)
+    public Comparable [][][]  generate (int [] tuples)
     {
         Random        rand      = new Random ();
         String        tableName = "";
@@ -109,47 +109,47 @@ public class TupleGeneratorImpl
                         if (pKeys.contains (attribute[k])) {  // key requires uniqueness
 
                             switch (domain[k]) {
-                                case "Integer":
-                                    for (iVal = rand.nextInt (1000000); pKeyValues.contains (iVal);
-                                         iVal = rand.nextInt (1000000));
-                                    subResult[j][k] = iVal;
-                                    pKeyValues.add (iVal);
-                                    break;
-                                case "String":
-                                    for (sVal = attribute[k] + rand.nextInt (1000000); pKeyValues.contains(sVal);
-                                         sVal = attribute[k] + rand.nextInt (1000000));
-                                    subResult[j][k] = sVal;
-                                    pKeyValues.add (sVal);
-                                    break;
-                                case "Double":
-                                    for (dVal = rand.nextInt (1000000) * rand.nextDouble (); pKeyValues.contains( dVal);
-                                         dVal = rand.nextInt (1000000) * rand.nextDouble ());
-                                    subResult[j][k] = dVal;
-                                    pKeyValues.add (dVal);
-                                    break;
-                                default:
-                                    throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
+                            case "Integer":
+                                for (iVal = rand.nextInt (1000000); pKeyValues.contains (iVal);
+                                     iVal = rand.nextInt (1000000));
+                                subResult[j][k] = iVal;
+                                pKeyValues.add (iVal);
+                                break;
+                            case "String":
+                                for (sVal = attribute[k] + rand.nextInt (1000000); pKeyValues.contains(sVal);
+                                     sVal = attribute[k] + rand.nextInt (1000000));
+                                subResult[j][k] = sVal;
+                                pKeyValues.add (sVal);
+                                break;
+                            case "Double":
+                                for (dVal = rand.nextInt (1000000) * rand.nextDouble (); pKeyValues.contains( dVal);
+                                     dVal = rand.nextInt (1000000) * rand.nextDouble ());
+                                subResult[j][k] = dVal;
+                                pKeyValues.add (dVal);
+                                break;
+                            default:
+                                throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
                             } // switch
 
                         } else {  // non-key does not require uniqueness
 
                             switch (domain[k]) {
-                                case "Integer":
-                                    subResult[j][k] = rand.nextInt(1000000); break;
-                                case "String":
-                                    subResult[j][k] = attribute [k] + rand.nextInt (1000000); break;
-                                case "Double":
-                                    subResult[j][k] = rand.nextInt (100000) * rand.nextDouble (); break;
-                                default:
-                                    throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
+                            case "Integer":
+                                subResult[j][k] = rand.nextInt(1000000); break;
+                            case "String":
+                                subResult[j][k] = attribute [k] + rand.nextInt (1000000); break;
+                            case "Double":
+                                subResult[j][k] = rand.nextInt (100000) * rand.nextDouble (); break;
+                            default:
+                                throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
                             } // switch
 
                         } // if
                     } // for
                 } // for
 
-                //-------------------------------------------------
-                // Handle the case where the table has foreign keys (maintain referential integrity)
+            //-------------------------------------------------
+            // Handle the case where the table has foreign keys (maintain referential integrity)
 
             } else {
                 for (int j = 0; j < tuples[i]; j++) {
@@ -177,8 +177,10 @@ public class TupleGeneratorImpl
                             } // for
                             Comparable [][] fkTable = result.get (fks[n][1]);
                             if (fkTable == null) {
-                                out.println ("Foreign Key Error: table containing referencing key cannot be populated before referenced table");
-                                out.println ("Possible Solution: Add '" + fks[n][1] + "' table before adding '" + tableName + "' table.");
+                                out.println ("Foreign Key Error: " +
+                                   "table containing referencing key cannot be populated before referenced table");
+                                out.println ("Possible Solution: Add '" + fks[n][1] + "' table before adding '" +
+                                    tableName + "' table.");
                                 System.exit (0);
                             } // if
                             int t = rand.nextInt (fkTable.length);
@@ -202,39 +204,39 @@ public class TupleGeneratorImpl
                             if (pKeys.contains (attribute[k])) {
 
                                 switch (domain[k]) {
-                                    case "Integer":
-                                        for (iVal = rand.nextInt (1000000); pKeyValues.contains (iVal);
-                                             iVal = rand.nextInt (1000000));
-                                        subResult[j][k] = iVal;
-                                        pKeyValues.add (iVal);
-                                        break;
-                                    case "String":
-                                        for (sVal = attribute[k] + rand.nextInt (1000000); pKeyValues.contains (sVal);
-                                             sVal = attribute[k] + rand.nextInt (1000000));
-                                        subResult[j][k] = sVal;
-                                        pKeyValues.add (sVal);
-                                        break;
-                                    case "Double":
-                                        for (dVal = rand.nextInt (1000000) * rand.nextDouble (); pKeyValues.contains (dVal);
-                                             dVal = rand.nextInt (1000000) * rand.nextDouble ());
-                                        subResult[j][k] = dVal;
-                                        pKeyValues.add (dVal);
-                                        break;
-                                    default:
-                                        throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
+                                case "Integer":
+                                    for (iVal = rand.nextInt (1000000); pKeyValues.contains (iVal);
+                                         iVal = rand.nextInt (1000000));
+                                    subResult[j][k] = iVal;
+                                    pKeyValues.add (iVal);
+                                    break;
+                                case "String":
+                                    for (sVal = attribute[k] + rand.nextInt (1000000); pKeyValues.contains (sVal);
+                                         sVal = attribute[k] + rand.nextInt (1000000));
+                                    subResult[j][k] = sVal;
+                                    pKeyValues.add (sVal);
+                                    break;
+                                case "Double":
+                                    for (dVal = rand.nextInt (1000000) * rand.nextDouble (); pKeyValues.contains (dVal);
+                                         dVal = rand.nextInt (1000000) * rand.nextDouble ());
+                                    subResult[j][k] = dVal;
+                                    pKeyValues.add (dVal);
+                                    break;
+                                default:
+                                    throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
                                 } // if
 
                             } else {
 
                                 switch (domain[k]) {
-                                    case "Integer":
-                                        subResult[j][k] = rand.nextInt (1000000); break;
-                                    case "String":
-                                        subResult[j][k] = attribute [k] + rand.nextInt (1000000); break;
-                                    case "Double":
-                                        subResult[j][k] = rand.nextInt (1000000) * rand.nextDouble (); break;
-                                    default:
-                                        throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
+                                case "Integer":
+                                    subResult[j][k] = rand.nextInt (1000000); break;
+                                case "String":
+                                    subResult[j][k] = attribute [k] + rand.nextInt (1000000); break;
+                                case "Double":
+                                    subResult[j][k] = rand.nextInt (1000000) * rand.nextDouble (); break;
+                                default:
+                                    throw new IllegalArgumentException("Invalid type in switch: " + domain[k]);
                                 } // if
 
                             } // if

@@ -8,7 +8,7 @@ public class MySQLDriver extends Driver {
 	// Mysql username
 	private final String user = "root";
 	// Mysql password
-	private final String password = "123456";
+	private final String password = "Potato.com99";
 	
 	public MySQLDriver() {
 		try {
